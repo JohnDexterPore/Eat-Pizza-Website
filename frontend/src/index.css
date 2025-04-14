@@ -1,0 +1,259 @@
+@import "tailwindcss";
+@plugin "daisyui";
+
+/* Font Declarations */
+@font-face {
+  font-family: "Esamanru Bold";
+  src: url("./assets/Fonts/esamanru Bold.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Esamanru Light";
+  src: url("./assets/Fonts/esamanru Light.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Esamanru Medium";
+  src: url("./assets/Fonts/esamanru Medium.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "GmarketSansTTFBold";
+  src: url("./assets/Fonts/GmarketSansTTFBold.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "GmarketSansTTFLight";
+  src: url("./assets/Fonts/GmarketSansTTFLight.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "GmarketSansTTFMedium";
+  src: url("./assets/Fonts/GmarketSansTTFMedium.ttf") format("truetype");
+}
+
+/* Font Classes */
+.esamanru-bold {
+  font-family: "Esamanru Bold", sans-serif;
+}
+
+.esamanru-light {
+  font-family: "Esamanru Light", sans-serif;
+}
+
+.esamanru-medium {
+  font-family: "Esamanru Medium", sans-serif;
+}
+
+.gmarket-bold {
+  font-family: "GmarketSansTTFBold", sans-serif;
+}
+
+.gmarket-light {
+  font-family: "GmarketSansTTFLight", sans-serif;
+}
+
+.gmarket-medium {
+  font-family: "GmarketSansTTFMedium", sans-serif;
+}
+
+/* 1. Use a more-intuitive box-sizing model */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+/* 2. Remove default margin */
+* {
+  margin: 0;
+}
+
+body {
+  /* 3. Add accessible line-height */
+  line-height: 1.5;
+  /* 4. Improve text rendering */
+  -webkit-font-smoothing: antialiased;
+  height: 100vh;
+  width: 100vw;
+}
+
+/* 5. Improve media defaults */
+img,
+picture,
+video,
+canvas,
+svg {
+  display: block;
+  max-width: 100%;
+}
+
+/* 6. Inherit fonts for form controls */
+input,
+button,
+textarea,
+select {
+  font: inherit;
+}
+
+/* 7. Avoid text overflows */
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  overflow-wrap: break-word;
+}
+
+/* 8. Improve line wrapping */
+p {
+  text-wrap: pretty;
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  text-wrap: balance;
+}
+
+/*
+  9. Create a root stacking context
+*/
+#root,
+#__next {
+  isolation: isolate;
+}
+
+.text-outline-loader {
+  color: transparent;
+  -webkit-text-stroke: 4px #2cccd3; /* Creates the outline */
+}
+
+.text-outline {
+  color: transparent;
+  -webkit-text-stroke: 4px white; /* Creates the outline */
+}
+
+.swiper {
+  width: 100%;
+  height: 100%;
+  display: inline-block;
+}
+
+.swiper-slide {
+  font-size: 18px;
+  transition: transform 0.3s ease-in-out; /* Simplified transition */
+}
+
+.swiper-slide img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.swiper-slide-custom {
+  white-space: pre-line; /* Ensures \n is recognized as a new line */
+}
+
+.text-outline-swiper-top {
+  color: transparent;
+  -webkit-text-stroke: 2px #2cccd3; /* Default outline */
+  transition: -webkit-text-stroke 0.3s ease-in-out, color 0.3s ease-in-out; /* More specific transitions */
+}
+
+.text-outline-swiper-bottom {
+  color: transparent;
+  -webkit-text-stroke: 2px #ef3340; /* Default outline */
+  transition: -webkit-text-stroke 0.3s ease-in-out, color 0.3s ease-in-out; /* More specific transitions */
+}
+
+/* Active Slide: Change color */
+.swiper-slide-active .text-outline-swiper-top {
+  color: #2cccd3; /* Make top text solid #2cccd3 */
+  -webkit-text-stroke: 0px transparent; /* Remove outline */
+  transform: scale(1.3); /* Reduced scale to optimize performance */
+  transition: transform 0.3s ease-in-out;
+}
+
+.swiper-slide-active .text-outline-swiper-bottom {
+  color: #ef3340; /* Make bottom text solid #ef3340 */
+  -webkit-text-stroke: 0px transparent; /* Remove outline */
+  transform: scale(1.3); /* Reduced scale to optimize performance */
+  transition: transform 0.3s ease-in-out;
+}
+
+/* Optional: Adding smoother hover effects on slides */
+.swiper-slide:hover {
+  transform: scale(1.05); /* Add subtle scale effect */
+}
+
+#text_header {
+  display: inline-block;
+  overflow: hidden;
+  white-space: nowrap;
+  animation: typing 1s steps(40, end) forwards,
+    blink-caret 0.75s step-end infinite;
+}
+
+@keyframes typing {
+  from {
+    width: 0;
+  }
+  to {
+    width: 100%;
+  }
+}
+
+@keyframes blink-caret {
+  from,
+  to {
+    border-color: transparent;
+  }
+  50% {
+    border-color: #2cccd3;
+  }
+}
+
+@keyframes deliveryMove {
+  0% {
+    transform: translateX(100vw) translateY(0);
+  }
+  50% {
+    transform: translateX(0) translateY(0);
+  }
+  100% {
+    transform: translateX(-100vw) translateY(0);
+  }
+}
+
+@keyframes vibrate {
+  0% {
+    transform: rotate(0deg);
+  }
+  25% {
+    transform: rotate(2deg);
+  }
+  50% {
+    transform: rotate(-2deg);
+  }
+  75% {
+    transform: rotate(2deg);
+  }
+  100% {
+    transform: rotate(0deg);
+  }
+}
+
+.animate-delivery-move {
+  animation: deliveryMove 10s linear infinite;
+  will-change: transform;
+}
+
+.animate-vibrate {
+  animation: vibrate 0.3s linear infinite;
+}
