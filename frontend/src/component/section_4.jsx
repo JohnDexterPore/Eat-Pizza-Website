@@ -15,6 +15,8 @@ function Section_4({ scrollPosition }) {
   const lastXRef = useRef(0);
   const prevCenterRef = useRef(0);
   const animationFrame = useRef(null);
+  const [showSmoke, setShowSmoke] = useState(false); // controls visibility
+  const [hideSmoke, setHideSmoke] = useState(false); // controls invisible class
 
   useEffect(() => {
     const section = document.querySelector(".section-4-container");
@@ -149,13 +151,14 @@ function Section_4({ scrollPosition }) {
             src={deliverySrc}
             alt="delivery"
           />
-          {isMoving && (
-            <img
-              className="w-3/4 absolute left-30 top-6"
-              src={smoke}
-              alt="smoke"
-            />
-          )}
+
+          <img
+            className={`w-3/4 absolute left-32 top-3 transition-opacity duration-700 ease-out ${
+              isMoving ? "opacity-100" : "opacity-0"
+            }`}
+            src={smoke}
+            alt="smoke"
+          />
         </div>
       </div>
     </div>
