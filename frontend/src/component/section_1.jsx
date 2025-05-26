@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import home_logo from "../assets/bg_image.jpg";
 
-function Section_1({ logoAnimationFinished }) {
+function Section_1({ logoAnimationFinished, scrollPosition }) {
   const [buttonOpacity, setButtonOpacity] = useState(0); // State to manage button opacity
 
   useEffect(() => {

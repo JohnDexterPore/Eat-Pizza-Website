@@ -5,88 +5,100 @@ import ep_logo from "../assets/fav_icon.png";
 import ep_logo_fill from "../assets/fav_icon_fill.png";
 import delivery from "../assets/delivery_motor.png";
 import delivery_icon from "../assets/delivery_motor_w_icon.png";
+import smoke from "../assets/smoke3.mp4";
 
-function Section_4() {
+function Section_4({ scrollPosition }) {
   const [deliverySrc, setDeliverySrc] = useState(delivery);
   const [isMoving, setIsMoving] = useState(false);
-  const lastTranslateXRef = useRef(null);
+  const deliveryRef = useRef(null);
+  const epLogosRef = useRef([]);
+  const lastXRef = useRef(0);
+  const prevCenterRef = useRef(0);
   const animationFrame = useRef(null);
+  const [smokeVisible, setSmokeVisible] = useState(false);
 
   useEffect(() => {
-    const scrollContainer = document.querySelector(".scroll-container");
-    const deliveryElement = document.querySelector(".delivery-motor");
-
-    if (!scrollContainer || !deliveryElement) return;
-
     const section = document.querySelector(".section-4-container");
-    if (!section) return;
+    const deliveryEl = deliveryRef.current;
+    if (!section || !deliveryEl) return;
 
-    const motorWidth = deliveryElement.offsetWidth;
+    const motorWidth = deliveryEl.offsetWidth;
     const totalTravel = window.innerWidth + motorWidth;
 
-    const getTranslateXFromScroll = () => {
-      const scrollPos = scrollContainer.scrollTop;
+    const lerp = (start, end, factor) => start + (end - start) * factor;
+    const middleThreshold = window.innerWidth / 2;
+
+    const animate = () => {
       const sectionOffsetTop = section.offsetTop;
       const sectionHeight = section.offsetHeight;
 
       const sectionProgress = Math.min(
         1,
-        Math.max(0, (scrollPos - sectionOffsetTop) / sectionHeight)
+        Math.max(0, (scrollPosition - sectionOffsetTop) / sectionHeight)
       );
 
-      return motorWidth - totalTravel * sectionProgress;
-    };
+      const targetX = motorWidth - totalTravel * sectionProgress;
+      const currentX = lerp(lastXRef.current, targetX, 0.1);
 
-    let currentX = getTranslateXFromScroll();
-    let targetX = currentX;
-    let prevX = currentX;
-    deliveryElement.style.transform = `translateX(${currentX}px)`;
+      deliveryEl.style.transform = `translateX(${currentX}px)`;
 
-    const lerp = (start, end, factor) => start + (end - start) * factor;
-
-    const middleThreshold = window.innerWidth / 2;
-
-    const update = () => {
-      targetX = getTranslateXFromScroll();
-      currentX = lerp(currentX, targetX, 0.1);
-
-      deliveryElement.style.transform = `translateX(${currentX}px)`;
-
-      const hasMoved = Math.abs(currentX - lastTranslateXRef.current) > 0.5;
-
+      const hasMoved = Math.abs(currentX - lastXRef.current) > 0.5;
       if (hasMoved) {
         if (!isMoving) setIsMoving(true);
-        lastTranslateXRef.current = currentX;
+        setSmokeVisible(true); // immediately show smoke
 
-        // Detect center crossing and update image
         const motorCenterX =
-          deliveryElement.getBoundingClientRect().left + motorWidth / 2;
+          deliveryEl.getBoundingClientRect().left + motorWidth / 2;
 
-        if (motorCenterX < middleThreshold && prevX >= middleThreshold) {
-          // Crossed center going left
+        if (
+          motorCenterX < middleThreshold &&
+          prevCenterRef.current >= middleThreshold
+        ) {
           setDeliverySrc(delivery_icon);
-        } else if (motorCenterX >= middleThreshold && prevX < middleThreshold) {
-          // Crossed center going right
+        } else if (
+          motorCenterX >= middleThreshold &&
+          prevCenterRef.current < middleThreshold
+        ) {
           setDeliverySrc(delivery);
         }
 
-        prevX = motorCenterX;
+        prevCenterRef.current = motorCenterX;
+        lastXRef.current = currentX;
       } else {
-        if (isMoving) setIsMoving(false);
+        if (isMoving) {
+          setIsMoving(false);
+
+          // delay hiding the smoke
+          setTimeout(() => {
+            setSmokeVisible(false);
+          }, 1500); // 1.5 seconds after stopping
+        }
       }
 
-      animationFrame.current = requestAnimationFrame(update);
+      animationFrame.current = requestAnimationFrame(animate);
     };
 
-    animationFrame.current = requestAnimationFrame(update);
-
-    scrollContainer.addEventListener("scroll", () => {}, { passive: true });
+    animationFrame.current = requestAnimationFrame(animate);
 
     return () => {
-      scrollContainer.removeEventListener("scroll", () => {});
       cancelAnimationFrame(animationFrame.current);
     };
-  }, [isMoving]);
+  }, [scrollPosition, isMoving]);
+
+  useEffect(() => {
+    if (!epLogosRef.current) return;
+
+    // Adjust this factor to control how fast the logos spin with scroll
+    const rotationFactor = 0.3;
+
+    epLogosRef.current.forEach((logo, index) => {
+      if (logo) {
+        const baseAngle = [306, 285, 80, 0][index];
+        const rotation = baseAngle + scrollPosition * rotationFactor;
+        logo.style.transform = `rotate(${rotation}deg)`;
+      }
+    });
+  }, [scrollPosition]);
 
   return (
     <div
@@ -96,17 +108,20 @@ function Section_4() {
       <img className="z-20 w-full h-auto" src={rj_betlog} alt="RJ Betlog" />
 
       <img
-        className="absolute z-20 h-auto w-1/10 right-0 top-0 -translate-x-[200%] -translate-y-1/2 rotate-[306deg]"
+        ref={(el) => (epLogosRef.current[0] = el)}
+        className="absolute z-20 h-auto w-1/10 right-0 top-0 -translate-x-[200%] -translate-y-1/2"
         src={ep_logo}
         alt="EAT PIZZA LOGO"
       />
       <img
-        className="absolute z-20 h-auto w-1/8 left-1/4 top-0 translate-y-1/3 -translate-x-1/2 rotate-[285deg]"
+        ref={(el) => (epLogosRef.current[1] = el)}
+        className="absolute z-20 h-auto w-1/8 left-1/4 top-0 translate-y-1/3 -translate-x-1/2"
         src={ep_logo}
         alt="EAT PIZZA LOGO"
       />
       <img
-        className="absolute z-20 h-auto w-1/12 left-1/4 top-1/2 -translate-y-1/2 -translate-x-1/2 rotate-[80deg]"
+        ref={(el) => (epLogosRef.current[2] = el)}
+        className="absolute z-20 h-auto w-1/12 left-1/4 top-1/2 -translate-y-1/2 -translate-x-1/2"
         src={ep_logo}
         alt="EAT PIZZA LOGO"
       />
@@ -121,16 +136,34 @@ function Section_4() {
       </div>
 
       <img
+        ref={(el) => (epLogosRef.current[3] = el)}
         className="absolute z-30 h-auto w-2/6 bottom-0 translate-y-1/2"
         src={ep_logo_fill}
         alt="EAT PIZZA LOGO"
       />
 
       <div className="overflow-x-auto absolute bottom-0 h-[55dvh] bg-[#2cccd3] w-full flex justify-center items-center">
-        <div className="delivery-motor absolute z-20 h-auto w-1/10 bottom-0 right-0">
+        <div
+          ref={deliveryRef}
+          className="delivery-motor absolute z-20 h-auto w-1/10 bottom-0 right-0 flex flex-row items-end"
+        >
+          {/* Smoke comes from exhaust (right side) */}
+          <ul className={`smoke ${smokeVisible ? "smoke-active" : ""}`}>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+          </ul>
+
           <img
-            className={`w-full h-auto origin-right ${
-              isMoving ? "animate-vibrate" : ""
+            className={`w-full h-full origin-right ${
+              smokeVisible ? "animate-vibrate" : ""
             }`}
             src={deliverySrc}
             alt="delivery"

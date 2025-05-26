@@ -236,13 +236,43 @@ h6 {
     transform: rotate(0deg);
   }
   25% {
-    transform: rotate(2deg);
+    transform: rotate(1.5deg);
   }
   50% {
-    transform: rotate(-2deg);
+    transform: rotate(0deg);
   }
   75% {
-    transform: rotate(2deg);
+    transform: rotate(1.5deg);
+  }
+  100% {
+    transform: rotate(0deg);
+  }
+}
+
+@keyframes deliveryMove {
+  0% {
+    transform: translateX(100vw) translateY(0);
+  }
+  50% {
+    transform: translateX(0) translateY(0);
+  }
+  100% {
+    transform: translateX(-100vw) translateY(0);
+  }
+}
+
+@keyframes vibrate {
+  0% {
+    transform: rotate(0deg);
+  }
+  25% {
+    transform: rotate(1.5deg);
+  }
+  50% {
+    transform: rotate(-0deg);
+  }
+  75% {
+    transform: rotate(1.5deg);
   }
   100% {
     transform: rotate(0deg);
@@ -250,10 +280,87 @@ h6 {
 }
 
 .animate-delivery-move {
-  animation: deliveryMove 10s linear infinite;
+  animation: deliveryMove 10s ease-in-out infinite;
   will-change: transform;
 }
 
 .animate-vibrate {
-  animation: vibrate 0.3s linear infinite;
+  animation: vibrate 0.4s ease-in-out infinite;
+  will-change: transform;
+}
+
+.smoke {
+  position: absolute;
+  bottom: 2%;
+  right: 35px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  z-index: 10;
+}
+
+/* Active smoke: thick + short rising animation */
+.smoke-active li {
+  position: absolute;
+  bottom: 0;
+  width: 20px;
+  height: 20px;
+  background: rgba(255, 255, 255, 1);
+  border-radius: 50%;
+  animation: rise 2s ease-in-out infinite;
+  opacity: 0;
+  transition: opacity 1.2s ease-in-out;
+  will-change: transform, opacity;
+}
+
+/* Individual smoke puff customization */
+.smoke-active li:nth-child(1) {
+  width: 20px;
+  height: 20px;
+  animation-delay: 0s;
+  animation-duration: 1.4s;
+}
+.smoke-active li:nth-child(2) {
+  width: 22px;
+  height: 22px;
+  animation-delay: 0.2s;
+  animation-duration: 1.6s;
+}
+.smoke-active li:nth-child(3) {
+  width: 18px;
+  height: 18px;
+  animation-delay: 0.4s;
+  animation-duration: 1.3s;
+}
+.smoke-active li:nth-child(4) {
+  width: 24px;
+  height: 24px;
+  animation-delay: 0.6s;
+  animation-duration: 1.5s;
+}
+.smoke-active li:nth-child(5) {
+  width: 21px;
+  height: 21px;
+  animation-delay: 0.8s;
+  animation-duration: 1.4s;
+}
+
+/* Smoother rise animation */
+@keyframes rise {
+  0% {
+    transform: translateX(0) translateY(0) scale(0.6) rotate(0deg);
+    opacity: 0.5;
+  }
+  30% {
+    transform: translateX(8px) translateY(-10px) scale(0.85) rotate(8deg);
+    opacity: 0.7;
+  }
+  60% {
+    transform: translateX(18px) translateY(-18px) scale(1.1) rotate(-6deg);
+    opacity: 0.4;
+  }
+  100% {
+    transform: translateX(30px) translateY(-28px) scale(1.35) rotate(4deg);
+    opacity: 0;
+  }
 }

@@ -16,7 +16,7 @@ import sweet_milk from "../assets/pizza/sweet_milk.png";
 import sweet_potato from "../assets/pizza/sweet_potato.png";
 import sweetcorn_cheese from "../assets/pizza/sweetcorn_cheese.png";
 
-const Section_3 = React.memo(() => {
+const Section_3 = React.memo(({ scrollPosition }) => {
   const [activeIndex, setActiveIndex] = useState(0);
   const [transitioning, setTransitioning] = useState(false);
   const [resetPosition, setResetPosition] = useState(false);
@@ -96,8 +96,8 @@ const Section_3 = React.memo(() => {
               spaceBetween={10}
               watchOverflow={true}
               autoplay={{
-                delay: 3000, // 3000ms = 3 seconds
-                disableOnInteraction: false, // Prevent stopping autoplay after user interaction
+                delay: 3000,
+                disableOnInteraction: false,
               }}
               className="mySwiper"
             >
@@ -131,7 +131,7 @@ const Section_3 = React.memo(() => {
                 <p className="">OUR MENU</p>
               </button>
               <button className="text-white !font-semibold !text-xl hover:text-[#ef3340] gmarket-medium bg-[#ef3340] px-5 py-3 rounded-full border-6 border-white hover:bg-white hover:border-[#ef3340]">
-                ORDER NOW
+                <p className="">ORDER NOW</p>
               </button>
             </div>
           </div>

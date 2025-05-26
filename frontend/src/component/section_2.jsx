@@ -100,7 +100,6 @@ function Section_2() {
     const playRate = 4;
     const observer = new IntersectionObserver(
       (entries) => {
-        // Flag to check if the sequence has already been activated
         let hasActivated = false;
 
         entries.forEach((entry) => {
