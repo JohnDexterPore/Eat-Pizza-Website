@@ -5,7 +5,7 @@ import ep_logo from "../assets/fav_icon.png";
 import ep_logo_fill from "../assets/fav_icon_fill.png";
 import delivery from "../assets/delivery_motor.png";
 import delivery_icon from "../assets/delivery_motor_w_icon.png";
-import smoke from "../assets/smoke3.mp4";
+import smoke from "../assets/SmokeGIF.gif";
 
 function Section_4({ scrollPosition }) {
   const [deliverySrc, setDeliverySrc] = useState(delivery);
@@ -15,7 +15,6 @@ function Section_4({ scrollPosition }) {
   const lastXRef = useRef(0);
   const prevCenterRef = useRef(0);
   const animationFrame = useRef(null);
-  const [smokeVisible, setSmokeVisible] = useState(false);
 
   useEffect(() => {
     const section = document.querySelector(".section-4-container");
@@ -45,7 +44,6 @@ function Section_4({ scrollPosition }) {
       const hasMoved = Math.abs(currentX - lastXRef.current) > 0.5;
       if (hasMoved) {
         if (!isMoving) setIsMoving(true);
-        setSmokeVisible(true); // immediately show smoke
 
         const motorCenterX =
           deliveryEl.getBoundingClientRect().left + motorWidth / 2;
@@ -66,12 +64,9 @@ function Section_4({ scrollPosition }) {
         lastXRef.current = currentX;
       } else {
         if (isMoving) {
-          setIsMoving(false);
-
-          // delay hiding the smoke
           setTimeout(() => {
-            setSmokeVisible(false);
-          }, 1500); // 1.5 seconds after stopping
+            setIsMoving(false);
+          }, 800); // match this to CSS fade time
         }
       }
 
@@ -145,29 +140,22 @@ function Section_4({ scrollPosition }) {
       <div className="overflow-x-auto absolute bottom-0 h-[55dvh] bg-[#2cccd3] w-full flex justify-center items-center">
         <div
           ref={deliveryRef}
-          className="delivery-motor absolute z-20 h-auto w-1/10 bottom-0 right-0 flex flex-row items-end"
+          className="delivery-motor absolute z-20 h-auto w-[10%] bottom-0 right-0 flex flex-row items-end"
         >
-          {/* Smoke comes from exhaust (right side) */}
-          <ul className={`smoke ${smokeVisible ? "smoke-active" : ""}`}>
-            <li></li>
-            <li></li>
-            <li></li>
-            <li></li>
-            <li></li>
-            <li></li>
-            <li></li>
-            <li></li>
-            <li></li>
-            <li></li>
-          </ul>
-
           <img
             className={`w-full h-full origin-right ${
-              smokeVisible ? "animate-vibrate" : ""
+              isMoving ? "animate-vibrate" : ""
             }`}
             src={deliverySrc}
             alt="delivery"
           />
+          {isMoving && (
+            <img
+              className="w-3/4 absolute left-30 top-6"
+              src={smoke}
+              alt="smoke"
+            />
+          )}
         </div>
       </div>
     </div>
