@@ -1,6 +1,6 @@
 import React, { useState, useMemo } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { Autoplay, Pagination } from "swiper/modules";
+import { Autoplay, Pagination} from "swiper/modules";
 import "swiper/css";
 import "swiper/css/pagination";
 import home_logo_swirl from "../assets/bg_image_swirl.jpg";
