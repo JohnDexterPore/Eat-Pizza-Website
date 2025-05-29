@@ -1,27 +1,9 @@
 import React, { useEffect, useState } from "react";
 import Logo from "../assets/logo.png";
 
-function Navbar({ transitionFinished, setLogoAnimationFinished }) {
-  const [isScrolled, setIsScrolled] = useState(false);
+function Navbar({ transitionFinished, setLogoAnimationFinished, scrollPosition }) {
   const [logoOpacity, setLogoOpacity] = useState(0); // State to manage logo opacity
-
-  useEffect(() => {
-    const pageDiv = document.querySelector(".scroll-container"); // Select the scrollable div
-
-    const handleScroll = () => {
-      setIsScrolled(pageDiv.scrollTop > 0);
-    };
-
-    if (pageDiv) {
-      pageDiv.addEventListener("scroll", handleScroll);
-    }
-
-    return () => {
-      if (pageDiv) {
-        pageDiv.removeEventListener("scroll", handleScroll);
-      }
-    };
-  }, []);
+  const isScrolled = scrollPosition > 0;
 
   useEffect(() => {
     // Delay the logo opacity change until the navbar is fully visible

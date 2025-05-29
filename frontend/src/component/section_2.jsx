@@ -10,8 +10,64 @@ import accent_2 from "../assets/accent_2.png";
 import accent_3 from "../assets/accent_3.png";
 import accent_4 from "../assets/accent_4.png";
 import accent_5 from "../assets/accent_5.png";
+import all_white_logo from "../assets/all_white_logo.png";
 
-function Section_2() {
+function Section_2({ scrollPosition }) {
+  const tickerItems = Array(10).fill({
+    item1: "EASY TO EAT 10 INCH-PIZZA",
+    item2: "HOT. FRESH. FAST",
+  });
+
+  const tickerRef1 = useRef(null);
+  const animationRef1 = useRef(null);
+  const positionRef1 = useRef(0);
+  const speed = 1; // pixels per frame
+
+  useEffect(() => {
+    const ticker1 = tickerRef1.current;
+    if (!ticker1) return;
+
+    const tickerWidth1 = ticker1.scrollWidth / 2;
+
+    function animate1() {
+      positionRef1.current += speed;
+      if (positionRef1.current >= 0) {
+        positionRef1.current = -tickerWidth1;
+      }
+      ticker1.style.transform = `translateX(${positionRef1.current}px)`;
+      animationRef1.current = requestAnimationFrame(animate1);
+    }
+
+    animationRef1.current = requestAnimationFrame(animate1);
+
+    return () => {
+      cancelAnimationFrame(animationRef1.current);
+    };
+  }, [speed]);
+
+  const renderTickerItems = (fontSize1, fontSize2, color1, color2) =>
+    [...tickerItems, ...tickerItems].map((item, index) => (
+      <div key={index} className="flex">
+        <span className="flex flex-col">
+          <span
+            className={`font-bold uppercase esamanru-bold ${fontSize1} ${color1}`}
+          >
+            {item.item1}
+          </span>
+          <span
+            className={`font-bold uppercase esamanru-bold ${fontSize2} ${color2}`}
+          >
+            {item.item2}
+          </span>
+        </span>
+        <img
+          src={all_white_logo}
+          alt="EAT PIZZA LOGO"
+          className="rotate-90 h-[520px] w-auto"
+        />
+      </div>
+    ));
+
   const videoRef1 = useRef(null);
   const videoRef2 = useRef(null);
   const videoRefCheck = useRef(null);
@@ -53,25 +109,26 @@ function Section_2() {
     cancelAnimationFrame(reverseAnimationFrame);
   };
 
-  const handleScroll = (event) => {
+  useEffect(() => {
     if (!videoRef1.current || !videoRef2.current) return;
-    const delta = event.deltaY;
 
-    if (delta > 0) {
+    let lastScrollPosition = 0;
+
+    if (scrollPosition > lastScrollPosition) {
       // Scrolling down - Play normally
       stopReverse();
       videoRef1.current.playbackRate = 1;
       videoRef1.current.play();
       videoRef2.current.playbackRate = 1;
       videoRef2.current.play();
-    } else {
+    } else if (scrollPosition < lastScrollPosition) {
       // Scrolling up - Reverse playback
       videoRef1.current.pause();
       videoRef2.current.pause();
       playReverse();
     }
 
-    // Clear timeout if still scrolling
+    // Clear previous timeout
     if (scrollTimeout) {
       clearTimeout(scrollTimeout);
     }
@@ -84,17 +141,15 @@ function Section_2() {
         stopReverse();
       }
     }, 100);
-  };
 
-  useEffect(() => {
-    window.addEventListener("wheel", handleScroll, { passive: true });
+    lastScrollPosition = scrollPosition;
 
+    // Cleanup function to clear timeout on unmount
     return () => {
-      window.removeEventListener("wheel", handleScroll);
       if (scrollTimeout) clearTimeout(scrollTimeout);
       stopReverse();
     };
-  }, []);
+  }, [scrollPosition]);
 
   useEffect(() => {
     const playRate = 4;
@@ -241,9 +296,20 @@ function Section_2() {
         </div>
       </div>
       <div className="pt-10 h-fit bg-[#2cccd3] w-full text-black bg-cover bg-center overflow-hidden relative flex justify-center items-center">
+        <div className="absolute top-56 w-[110%] rotate-[5deg] -space-y-10">
+          {/* Ticker 1 */}
+          <div ref={tickerRef1} className="flex w-max will-change-transform">
+            {renderTickerItems(
+              "text-[175px]/60",
+              "text-[280px]/65",
+              "text-outline-ticker-1",
+              "text-outline-ticker-1"
+            )}
+          </div>
+        </div>
         <video
           ref={videoRef2}
-          className="absolute bottom-10 left-0 w-full h-full object-cover scale-175 rotate-350"
+          className="absolute bottom-10 left-0 w-full h-full object-cover scale-175 rotate-350 invisible"
           src={sliding_text}
           loop
           muted

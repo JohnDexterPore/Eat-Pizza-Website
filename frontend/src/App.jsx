@@ -48,6 +48,7 @@ const App = () => {
         <Navbar
           transitionFinished={transitionFinished}
           setLogoAnimationFinished={setLogoAnimationFinished}
+          scrollPosition={scrollPosition}
         />
         <div className="h-screen w-full relative">
           <Section_1 logoAnimationFinished={logoAnimationFinished} scrollPosition={scrollPosition} />

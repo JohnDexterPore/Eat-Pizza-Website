@@ -1,11 +1,13 @@
 import React, { useState, useRef, useEffect } from "react";
 import home_logo_swirl from "../assets/bg_image_swirl.jpg";
-import rj_betlog from "../assets/rj_betlog.png";
+import rj_betlog from "../assets/rj_betlog1.png";
 import ep_logo from "../assets/fav_icon.png";
 import ep_logo_fill from "../assets/fav_icon_fill.png";
 import delivery from "../assets/delivery_motor.png";
 import delivery_icon from "../assets/delivery_motor_w_icon.png";
 import smoke from "../assets/SmokeGIF.gif";
+import grab from "../assets/grab.png";
+import foodpanda from "../assets/foodpanda.png";
 
 function Section_4({ scrollPosition }) {
   const [deliverySrc, setDeliverySrc] = useState(delivery);
@@ -102,44 +104,55 @@ function Section_4({ scrollPosition }) {
       className="section-4-container relative h-fit bg-white w-full text-black bg-cover bg-center flex flex-col justify-center items-center"
       style={{ backgroundImage: `url(${home_logo_swirl})` }}
     >
-      <img className="z-20 w-full h-auto" src={rj_betlog} alt="RJ Betlog" />
+      <img className="z-20 w-[100%]" src={rj_betlog} alt="RJ Betlog" />
 
       <img
         ref={(el) => (epLogosRef.current[0] = el)}
-        className="absolute z-20 h-auto w-1/10 right-0 top-0 -translate-x-[200%] -translate-y-1/2"
+        className="absolute z-20 h-auto w-1/8 right-0 top-15 -translate-x-[170%] -translate-y-1/2"
         src={ep_logo}
         alt="EAT PIZZA LOGO"
       />
       <img
         ref={(el) => (epLogosRef.current[1] = el)}
-        className="absolute z-20 h-auto w-1/8 left-1/4 top-0 translate-y-1/3 -translate-x-1/2"
+        className="absolute z-20 h-auto w-1/6 left-1/6 top-5 -translate-y-1 -translate-x-1/2"
         src={ep_logo}
         alt="EAT PIZZA LOGO"
       />
       <img
         ref={(el) => (epLogosRef.current[2] = el)}
-        className="absolute z-20 h-auto w-1/12 left-1/4 top-1/2 -translate-y-1/2 -translate-x-1/2"
+        className="absolute z-20 h-auto w-1/10 left-1/8 top-1/2 -translate-y-3/4"
         src={ep_logo}
         alt="EAT PIZZA LOGO"
       />
 
-      <div className="absolute top-1/4 left-1/3 -translate-x-[30%] -translate-y-[90%] rotate-[309deg] z-20 flex flex-col justify-center items-center">
-        <h1 className="text-outline-loader text-5xl md:text-7xl lg:text-9xl esamanru-bold">
+      <div className="absolute top-1/4 left-1/4 -translate-x-[30%] -translate-y-[80%] rotate-[309deg] gap-3 z-20 flex flex-col justify-center items-center">
+        <h1 className="text-outline-loader text-5xl md:text-7xl lg:text-[145px] esamanru-bold">
           ENJOY
         </h1>
-        <h1 className="text-2xl md:text-4xl lg:text-6xl font-bold text-[#ef3340]">
+        <h1 className="text-2xl md:text-4xl lg:text-[58px] esamanru-bold text-[#ef3340]">
           ANYTIME, ANYWHERE
         </h1>
       </div>
 
       <img
         ref={(el) => (epLogosRef.current[3] = el)}
-        className="absolute z-30 h-auto w-2/6 bottom-0 translate-y-1/2"
+        className="absolute z-30 h-auto w-2/7 bottom-0 translate-y-1/2"
         src={ep_logo_fill}
         alt="EAT PIZZA LOGO"
       />
 
-      <div className="overflow-x-auto absolute bottom-0 h-[55dvh] bg-[#2cccd3] w-full flex justify-center items-center">
+      <div className="overflow-hidden absolute bottom-0 h-[60dvh] bg-[#2cccd3] w-full flex flex-row justify-center items-center">
+        <div className="w-full">
+          <div className="w-1/2 absolute left-25 flex flex-col gap-3 items-center top-50 z-100 text-white text-3xl esamanru-light">
+            <p>Order Via:</p>
+            <img className="h-auto w-1/4" src={grab} alt="EAT PIZZA Grab" />
+            <img
+              className="h-auto w-1/3"
+              src={foodpanda}
+              alt="EAT PIZZA FoodPanda"
+            />
+          </div>
+        </div>
         <div
           ref={deliveryRef}
           className="delivery-motor absolute z-20 h-auto w-[10%] bottom-0 right-0 flex flex-row items-end"

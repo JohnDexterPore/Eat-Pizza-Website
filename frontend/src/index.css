@@ -1,5 +1,5 @@
 @import "tailwindcss";
-
+@plugin "daisyui";
 /* Font Declarations */
 @font-face {
   font-family: "Esamanru Bold";
@@ -129,12 +129,22 @@ h6 {
 
 .text-outline-loader {
   color: transparent;
-  -webkit-text-stroke: 4px #2cccd3; /* Creates the outline */
+  -webkit-text-stroke: 5px #2cccd3; /* Creates the outline */
+}
+
+.text-outline-ticker-1 {
+  color: transparent;
+  -webkit-text-stroke: 5px #63d6e3; /* Creates the outline */
+}
+
+.text-outline-ticker-2 {
+  color: transparent;
+  -webkit-text-stroke: 6px #2cccd3; /* Creates the outline */
 }
 
 .text-outline {
   color: transparent;
-  -webkit-text-stroke: 4px white; /* Creates the outline */
+  -webkit-text-stroke: 5px white; /* Creates the outline */
 }
 
 .swiper {
