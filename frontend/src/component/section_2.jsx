@@ -21,7 +21,10 @@ function Section_2({ scrollPosition }) {
   const tickerRef1 = useRef(null);
   const animationRef1 = useRef(null);
   const positionRef1 = useRef(0);
-  const speed = 1; // pixels per frame
+  const baseSpeed = 1; // normal speed
+
+  const speedMultiplierRef = useRef(1);
+  const resetSpeedTimeoutRef = useRef(null);
 
   useEffect(() => {
     const ticker1 = tickerRef1.current;
@@ -30,10 +33,13 @@ function Section_2({ scrollPosition }) {
     const tickerWidth1 = ticker1.scrollWidth / 2;
 
     function animate1() {
-      positionRef1.current += speed;
+      // Use current speed multiplier (changes dynamically)
+      positionRef1.current += baseSpeed * speedMultiplierRef.current;
+
       if (positionRef1.current >= 0) {
         positionRef1.current = -tickerWidth1;
       }
+
       ticker1.style.transform = `translateX(${positionRef1.current}px)`;
       animationRef1.current = requestAnimationFrame(animate1);
     }
@@ -43,7 +49,32 @@ function Section_2({ scrollPosition }) {
     return () => {
       cancelAnimationFrame(animationRef1.current);
     };
-  }, [speed]);
+  }, []); // run only once on mount
+
+  // Effect to update speedMultiplier on scrollPosition change
+  useEffect(() => {
+    // On scrollPosition change, speed up to max 3x
+    const newMultiplier = Math.min(Math.max(scrollPosition / 100, 1), 5);
+    speedMultiplierRef.current = newMultiplier;
+
+    // Clear any existing reset timeout
+    if (resetSpeedTimeoutRef.current) {
+      clearTimeout(resetSpeedTimeoutRef.current);
+    }
+
+    // After 1 second of no scrollPosition changes, reset multiplier to 1 (normal speed)
+    resetSpeedTimeoutRef.current = setTimeout(() => {
+      speedMultiplierRef.current = 1;
+    }, 1000);
+
+    // Cleanup on unmount
+    return () => {
+      if (resetSpeedTimeoutRef.current) {
+        clearTimeout(resetSpeedTimeoutRef.current);
+      }
+    };
+  }, [scrollPosition]);
+  
 
   const renderTickerItems = (fontSize1, fontSize2, color1, color2) =>
     [...tickerItems, ...tickerItems].map((item, index) => (

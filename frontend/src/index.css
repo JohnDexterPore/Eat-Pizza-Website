@@ -155,7 +155,7 @@ h6 {
 
 .swiper-slide {
   font-size: 18px;
-  transition: transform 0.3s ease-in-out; /* Simplified transition */
+  transition: transform 0.3s ease-in-out;
 }
 
 .swiper-slide img {
@@ -196,10 +196,11 @@ h6 {
   transition: transform 0.3s ease-in-out;
 }
 
-/* Optional: Adding smoother hover effects on slides */
-.swiper-slide:hover {
-  transform: scale(1.05); /* Add subtle scale effect */
+.swiper-slide-active .text-outline-swiper-top,
+.swiper-slide-active .text-outline-swiper-bottom {
+  will-change: transform;
 }
+
 
 #text_header {
   display: inline-block;

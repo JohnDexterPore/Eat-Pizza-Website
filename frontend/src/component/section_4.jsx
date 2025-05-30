@@ -17,72 +17,62 @@ function Section_4({ scrollPosition }) {
   const lastXRef = useRef(0);
   const prevCenterRef = useRef(0);
   const animationFrame = useRef(null);
-  const [showSmoke, setShowSmoke] = useState(false); // controls visibility
-  const [hideSmoke, setHideSmoke] = useState(false); // controls invisible class
 
   useEffect(() => {
-    const section = document.querySelector(".section-4-container");
     const deliveryEl = deliveryRef.current;
-    if (!section || !deliveryEl) return;
-
-    const motorWidth = deliveryEl.offsetWidth;
-    const totalTravel = window.innerWidth + motorWidth;
+    if (!deliveryEl) return;
 
     const lerp = (start, end, factor) => start + (end - start) * factor;
-    const middleThreshold = window.innerWidth / 2;
+    const clamp = (value, min, max) => Math.min(Math.max(value, min), max);
 
     const animate = () => {
-      const sectionOffsetTop = section.offsetTop;
-      const sectionHeight = section.offsetHeight;
+      const rect = deliveryEl.getBoundingClientRect();
+      const deliveryY = rect.top;
+      const viewportHeight = window.innerHeight;
 
-      const sectionProgress = Math.min(
-        1,
-        Math.max(0, (scrollPosition - sectionOffsetTop) / sectionHeight)
-      );
+      if (deliveryY >= 0 && deliveryY <= viewportHeight) {
+        const progress = 1 - deliveryY / viewportHeight;
+        const maxTravel = window.innerWidth + deliveryEl.offsetWidth;
+        const rawX = -progress * maxTravel;
+        const targetX = clamp(rawX, -maxTravel, 0);
 
-      const targetX = motorWidth - totalTravel * sectionProgress;
-      const currentX = lerp(lastXRef.current, targetX, 0.1);
+        // Smooth movement
+        const currentX = lerp(lastXRef.current, targetX, 0.1);
+        deliveryEl.style.transform = `translateX(${currentX}px)`;
 
-      deliveryEl.style.transform = `translateX(${currentX}px)`;
-
-      const hasMoved = Math.abs(currentX - lastXRef.current) > 0.5;
-      if (hasMoved) {
-        if (!isMoving) setIsMoving(true);
-
-        const motorCenterX =
-          deliveryEl.getBoundingClientRect().left + motorWidth / 2;
-
-        if (
-          motorCenterX < middleThreshold &&
-          prevCenterRef.current >= middleThreshold
-        ) {
-          setDeliverySrc(delivery_icon);
-        } else if (
-          motorCenterX >= middleThreshold &&
-          prevCenterRef.current < middleThreshold
-        ) {
-          setDeliverySrc(delivery);
+        // Determine if it's still moving
+        const hasMoved = Math.abs(currentX - lastXRef.current) > 0.5;
+        if (hasMoved) {
+          if (!isMoving) setIsMoving(true);
+        } else {
+          if (isMoving) {
+            setTimeout(() => setIsMoving(false), 800);
+          }
         }
 
-        prevCenterRef.current = motorCenterX;
         lastXRef.current = currentX;
+
+        // Switch delivery icon mid-screen
+        const middleY = viewportHeight / 2;
+        if (deliveryY < middleY && deliverySrc !== delivery_icon) {
+          setDeliverySrc(delivery_icon);
+        } else if (deliveryY >= middleY && deliverySrc !== delivery) {
+          setDeliverySrc(delivery);
+        }
       } else {
         if (isMoving) {
-          setTimeout(() => {
-            setIsMoving(false);
-          }, 800); // match this to CSS fade time
+          setTimeout(() => setIsMoving(false), 800);
         }
       }
 
       animationFrame.current = requestAnimationFrame(animate);
     };
-
+    
     animationFrame.current = requestAnimationFrame(animate);
-
-    return () => {
-      cancelAnimationFrame(animationFrame.current);
-    };
-  }, [scrollPosition, isMoving]);
+    return () => cancelAnimationFrame(animationFrame.current);
+  }, [deliverySrc, isMoving]);
+  
+  
 
   useEffect(() => {
     if (!epLogosRef.current) return;
@@ -135,13 +125,12 @@ function Section_4({ scrollPosition }) {
       </div>
 
       <img
-        ref={(el) => (epLogosRef.current[3] = el)}
         className="absolute z-30 h-auto w-2/7 bottom-0 translate-y-1/2"
         src={ep_logo_fill}
         alt="EAT PIZZA LOGO"
       />
 
-      <div className="overflow-hidden absolute bottom-0 h-[60dvh] bg-[#2cccd3] w-full flex flex-row justify-center items-center">
+      <div className="overflow-hidden absolute bottom-0 h-[40%] bg-[#2cccd3] w-full flex flex-row justify-center items-center">
         <div className="w-full">
           <div className="w-1/2 absolute left-25 flex flex-col gap-3 items-center top-50 z-100 text-white text-3xl esamanru-light">
             <p>Order Via:</p>

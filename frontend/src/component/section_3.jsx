@@ -60,7 +60,7 @@ const Section_3 = React.memo(({ scrollPosition }) => {
         className="h-8/9 p-10 bg-white w-full text-black bg-cover bg-center relative flex flex-col justify-center items-center"
         style={{ backgroundImage: `url(${home_logo_swirl})` }}
       >
-        <div className="flex relative justify-center items-end w-full h-1/2">
+        <div className="flex relative justify-center items-center w-full h-1/2">
           <img
             src={outer_shell}
             alt="Outer Shell"
