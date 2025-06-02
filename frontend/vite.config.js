@@ -8,22 +8,7 @@ export default defineConfig({
   plugins: [
     react(),
     tailwindcss(),
-    imagemin({
-      gifsicle: { optimizationLevel: 3 },
-      mozjpeg: { quality: 80 },
-      optipng: { optimizationLevel: 5 },
-      webp: {
-        quality: 80,
-        lossless: false,
-        nearLossless: false,
-      },
-      svgo: {
-        plugins: [
-          { name: "removeViewBox" },
-          { name: "removeEmptyAttrs", active: false },
-        ],
-      },
-    }),
+    
   ],
   build: {
     rollupOptions: {

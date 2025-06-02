@@ -74,7 +74,6 @@ function Section_2({ scrollPosition }) {
       }
     };
   }, [scrollPosition]);
-  
 
   const renderTickerItems = (fontSize1, fontSize2, color1, color2) =>
     [...tickerItems, ...tickerItems].map((item, index) => (
@@ -110,6 +109,7 @@ function Section_2({ scrollPosition }) {
   let reverseAnimationFrame = null;
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const handleMouseMove = (e) => {
+    if (window.innerWidth < 1024) return;
     const { clientX, clientY } = e;
     setMousePosition({ x: clientX, y: clientY });
   };
@@ -236,11 +236,11 @@ function Section_2({ scrollPosition }) {
     <>
       <div
         onMouseMove={handleMouseMove}
-        className="h-fit pt-35 bg-[#2cccd3] w-full text-black bg-cover bg-center overflow-hidden relative flex justify-center items-center"
+        className="h-fit pt-20 md:pt-25 lg:pt-35 bg-[#2cccd3] w-full text-black bg-cover bg-center overflow-hidden relative flex justify-center items-center"
       >
         <video
           ref={videoRef1}
-          className="absolute top-20 left-0 w-full h-full object-cover scale-175 rotate-2"
+          className="absolute -top-30 md:top-20 left-0 w-full h-full object-cover md:scale-155 lg:scale-175 rotate-2"
           src={sliding_icons}
           loop
           muted
@@ -249,12 +249,12 @@ function Section_2({ scrollPosition }) {
           <img
             src={pizza_display}
             alt="Pizza Display"
-            className="relative z-10 w-1/2 rounded-[3vw] rotate-357 shadow-[-25px_30px_0px_rgba(0,0,0,0.1)]"
+            className="relative z-10 w-3/4 md:w-2/3 lg:w-1/2 rounded-[3vw] rotate-357 shadow-[-25px_30px_0px_rgba(0,0,0,0.1)]"
           />
           <img
             src={accent_1}
             alt=""
-            className="absolute w-1/11 left-150 bottom-195 z-12"
+            className="absolute w-1/6 left-25 top-8 md:w-1/8 md:left-55 md:top-6 lg:w-1/11 lg:left-[31.25vw] lg:top-[0vh] z-12"
             style={{
               transform: `translate(${(mousePosition.x - 150) / divisor}px, ${
                 (mousePosition.y - 195) / divisor
@@ -264,7 +264,7 @@ function Section_2({ scrollPosition }) {
           <img
             src={accent_2}
             alt=""
-            className="absolute w-1/11 left-80 bottom-130 z-12"
+            className="absolute w-1/6 left-0 top-25 md:w-1/8 md:left-10 md:top-35 lg:w-1/11 lg:left-[16.67vw] lg:top-[20vh] z-12"
             style={{
               transform: `translate(${
                 -(mousePosition.x - 80) / divisor // Reverse movement by flipping the direction
@@ -274,7 +274,7 @@ function Section_2({ scrollPosition }) {
           <img
             src={accent_3}
             alt=""
-            className="absolute w-1/11 left-90 bottom-30 z-12"
+            className="absolute w-1/6 left-0 top-60 md:w-1/8 md:left-15 md:top-100 lg:w-1/11 lg:left-[18.75vw] lg:top-[70vh] z-12"
             style={{
               transform: `translate(${
                 (mousePosition.x - 90) / divisor // This one moves normally
@@ -284,7 +284,7 @@ function Section_2({ scrollPosition }) {
           <img
             src={accent_4}
             alt=""
-            className="absolute w-1/11 left-280 bottom-35 z-12"
+            className="absolute w-1/6 left-50 top-60 md:w-1/8 md:left-115 md:top-100 lg:w-1/11 lg:left-[58.33vw] lg:top-[67vh] z-12"
             style={{
               transform: `translate(${
                 -(mousePosition.x - 280) / divisor // Reverse horizontal movement here too
@@ -294,7 +294,7 @@ function Section_2({ scrollPosition }) {
           <img
             src={accent_5}
             alt=""
-            className="absolute w-1/11 left-350 bottom-40 z-12"
+            className="absolute w-1/6 left-85 top-65 md:w-1/8 md:left-160 md:top-90 lg:w-1/11 lg:left-[72.91vw] lg:top-[65vh] z-12"
             style={{
               transform: `translate(${
                 -(mousePosition.x - 350) / divisor // Reverse both x and y here
@@ -302,18 +302,19 @@ function Section_2({ scrollPosition }) {
             }}
           />
 
-          <div className="pt-10 relative flex flex-wrap justify-center items-center text-3xl gmarket-bold text-white gap-5">
-            <div className="w-full">
-              <p className="w-full flex justify-center">
-                Lorem ipsum dolor&nbsp;
+          <div className="pt-10 z-20 relative flex flex-wrap justify-center items-center gmarket-bold text-white gap-5">
+            <div className="w-3/4 flex flex-col items-center text-center leading-snug md:text-2xl lg:text-3xl">
+              <p>
+                Lorem ipsum dolor{" "}
                 <span className="text-[#ef3340]">sit amet,</span>
               </p>
-              <p className="w-full flex justify-center">
-                <span className="text-[#ef3340]">consectetur</span>
-                &nbsp;adipiscing elit
+              <p>
+                <span className="text-[#ef3340]">consectetur</span> adipiscing
+                elit
               </p>
             </div>
-            <p className="w-2/5 flex text-center text-sm gmarket-medium">
+
+            <p className="w-3/4 lg:w-2/5 flex text-center text-sm gmarket-medium">
               Nullam congue neque id tellus auctor, eu porta felis ultrices.
               Vestibulum sed ligula risus. Donec a tempus mi. Vestibulum et enim
               cursus, congue odio sit amet, volutpat eros. Nullam luctus enim
@@ -347,16 +348,16 @@ function Section_2({ scrollPosition }) {
         ></video>
         <div className="relative flex flex-wrap justify-center items-center gap-15">
           <div className="flex justify-start items-center gap-30 w-full">
-            <div className="w-1/2 flex justify-end pt-30">
+            <div className="w-full md:w-1/2 lg:w-1/2 flex justify-center md:justify-end lg:justify-end pt-30">
               <div
                 style={{ backgroundImage: `url(${pizza_display_1})` }}
-                className="w-2/5 h-150 rotate-350 bg-center bg-cover rounded-[3vw] overflow-hidden shadow-[-15px_20px_0px_rgba(0,0,0,0.1)]"
+                className="w-3/4 md:w-4/5 lg:w-2/5 h-100 md:h-150 rotate-350 bg-center bg-cover rounded-[3vw] overflow-hidden shadow-[-15px_20px_0px_rgba(0,0,0,0.1)]"
               ></div>
             </div>
-            <div className="w-1/2 flex justify-start pb-30">
+            <div className="md:w-1/2 lg:w-1/2 hidden md:flex lg:flex justify-start pb-30">
               <div
                 style={{ backgroundImage: `url(${pizza_display_2})` }}
-                className="w-2/5 h-150 rotate-3 bg-center bg-cover rounded-[3vw] overflow-hidden shadow-[-15px_20px_0px_rgba(0,0,0,0.1)]"
+                className="w-3/4 md:w-4/5 lg:w-2/5 h-100 md:h-150 rotate-3 bg-center bg-cover rounded-[3vw] overflow-hidden shadow-[-15px_20px_0px_rgba(0,0,0,0.1)]"
               ></div>
             </div>
           </div>

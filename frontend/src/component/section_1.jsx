@@ -22,10 +22,10 @@ function Section_1({ logoAnimationFinished, scrollPosition }) {
       style={{ backgroundImage: `url(${home_logo})` }}
     >
       <div className="flex flex-col justify-center items-center esamanru-bold gap-5">
-        <h1 className="text-6xl lg:text-8xl font-bold text-outline w-full flex justify-center">
+        <h1 className="text-3xl md:text-6xl lg:text-8xl/30 font-bold text-outline w-full flex justify-center">
           KOREA'S ORIGINAL
         </h1>
-        <h1 className="text-6xl lg:text-8xl font-bold text-white w-full flex justify-center">
+        <h1 className="text-3xl md:text-6xl lg:text-8xl font-bold text-white w-full flex justify-center">
           10 - INCH PIZZA
         </h1>
       </div>

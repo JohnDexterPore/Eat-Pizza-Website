@@ -129,7 +129,7 @@ h6 {
 
 .text-outline-loader {
   color: transparent;
-  -webkit-text-stroke: 5px #2cccd3; /* Creates the outline */
+  -webkit-text-stroke: 0.3vw #2cccd3; /* Responsive stroke width */
 }
 
 .text-outline-ticker-1 {
@@ -144,7 +144,7 @@ h6 {
 
 .text-outline {
   color: transparent;
-  -webkit-text-stroke: 5px white; /* Creates the outline */
+  -webkit-text-stroke: 0.3vw white; /* Responsive stroke width */
 }
 
 .swiper {

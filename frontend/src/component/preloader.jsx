@@ -62,7 +62,7 @@ const Preloader = ({ onTransitionFinished }) => {
 
   return (
     <div
-      className={`fixed inset-0 flex items-center justify-center bg-white overflow-y-scroll w-full z-100 transition-opacity duration-500 ${
+      className={`fixed inset-0 flex items-center justify-center bg-white overflow-y-scroll w-screen z-100 transition-opacity duration-500 ${
         fadeOut ? "opacity-0" : "opacity-100"
       }`}
     >
@@ -76,17 +76,17 @@ const Preloader = ({ onTransitionFinished }) => {
 
       {showContent && (
         <div className="h-full pt-35 bg-cover bg-center w-full flex flex-col gap-30 justify-center items-center">
-          <div className="flex flex-col justify-center items-center esamanru-bold gap-5">
+          <div className="flex flex-col justify-center items-center esamanru-bold gap-5 text-center">
             <h1
               ref={firstTextRef}
               id="text_header"
-              className="text-6xl lg:text-8xl font-bold text-outline-loader flex justify-center header-loader"
+              className="text-3xl md:text-6xl lg:text-8xl/30 font-bold text-outline-loader flex justify-center header-loader"
             >
               KOREA'S ORIGINAL
             </h1>
             <h1
               ref={secondTextRef}
-              className={`text-6xl lg:text-8xl font-bold text-[#2cccd3] w-full flex justify-center opacity-0 transition-opacity duration-1000 ${
+              className={`text-3xl md:text-6xl lg:text-8xl font-bold text-[#2cccd3] w-full flex justify-center opacity-0 transition-opacity duration-1000 ${
                 fadeInSecondText ? "opacity-100" : "opacity-0"
               }`}
             >

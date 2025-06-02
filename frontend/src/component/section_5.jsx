@@ -176,7 +176,7 @@ function Section_5() {
                 </div>
 
                 <div className="absolute -right-10 w-1/2 text-center z-10 !object-contain border rounded-4xl opacity-0 scale-95 pointer-events-none transition-all duration-500 ease-in-out group-[.swiper-slide-active]:opacity-100 group-[.swiper-slide-active]:scale-100 group-[.swiper-slide-active]:pointer-events-auto group-[.swiper-slide-active]:relative flex flex-col gap-5">
-                  <p className="text-[#ef3340] text-5xl">{store.name}</p>
+                  <p className="text-[#ef3340] text-5xl text-nowrap">{store.name}</p>
                   <div className="flex flex-col text-[#2cccd3] text-xl ">
                     <p>{store.floor}</p>
                     <p>{store.contact_number}</p>
