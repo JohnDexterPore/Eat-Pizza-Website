@@ -18,10 +18,10 @@ function Section_1({ logoAnimationFinished, scrollPosition }) {
 
   return (
     <div
-      className="h-full !-mt-[16.67dvh] pt-35 bg-cover bg-center w-full flex flex-col gap-30 justify-center items-center"
+      className="h-[100dvh] !-mt-[16.67dvh] lg:[100vh] lg:!-mt-[16.67vh] pt-35 bg-cover bg-center w-full flex flex-col gap-30 justify-center items-center"
       style={{ backgroundImage: `url(${home_logo})` }}
     >
-      <div className="flex flex-col justify-center items-center esamanru-bold gap-5">
+      <div className="flex flex-col justify-center items-center esamanru-bold gap-5 text-center">
         <h1 className="text-3xl md:text-6xl lg:text-8xl/30 font-bold text-outline w-full flex justify-center">
           KOREA'S ORIGINAL
         </h1>

@@ -64,25 +64,33 @@ const Section_3 = React.memo(({ scrollPosition }) => {
           <img
             src={outer_shell}
             alt="Outer Shell"
-            className={`relative ${
-              transitioning
-                ? "left-1/4"
-                : resetPosition
-                ? "left-1/8"
-                : "left-1/8"
-            } z-10 w-1/2 rounded-4xl transition-all duration-500 ease-in-out`}
+            className="relative z-10 w-1/2 rounded-4xl transition-transform duration-500 ease-in-out"
+            style={{
+              transform: `translateX(${transitioning ? "50%" : "25%"})`,
+              willChange: "transform",
+            }}
           />
-          <img
-            src={currentSlide.import_name}
-            alt={currentSlide.name}
-            className={`relative ${
-              transitioning
-                ? "right-1/4"
-                : resetPosition
-                ? "right-1/8"
-                : "right-1/8"
-            } z-9 w-1/2 rounded-4xl transition-all duration-500 ease-in-out`}
-          />
+          <div
+            className="relative z-9 w-1/2 transition-transform duration-500 ease-in-out"
+            style={{
+              transform: `translateX(${transitioning ? "-50%" : "-25%"})`,
+              willChange: "transform",
+            }}
+          >
+            {pizzaSlides.map((slide, index) => (
+              <img
+                key={index}
+                src={slide.import_name}
+                alt={slide.name}
+                className={`w-full rounded-4xl ${
+                  index === activeIndex ? "opacity-100" : "opacity-0"
+                }`}
+                style={{
+                  position: index === activeIndex ? "relative" : "absolute",
+                }}
+              />
+            ))}
+          </div>
         </div>
 
         <div className="flex flex-wrap relative justify-start items-start w-full h-1/2 gap-5">

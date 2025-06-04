@@ -22,7 +22,7 @@ function Navbar({ transitionFinished, setLogoAnimationFinished, scrollPosition }
   return (
     <div
       className={`navbar shadow-lg bg-white text-black relative z-50 flex justify-between items-center px-5 transition-all duration-500 ${
-        isScrolled ? "h-1/9" : "h-2/12"
+        isScrolled ? "h-1/9" : "h-[16.67dvh]"
       } ${transitionFinished ? "opacity-100" : "opacity-0"}`}
     >
       <div className="navbar-start w-1/4"></div>
